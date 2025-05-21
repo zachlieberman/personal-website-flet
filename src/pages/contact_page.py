@@ -9,6 +9,11 @@ from flet import (
     SafeArea,
     alignment,
     Column,
+    TextField,
+    ElevatedButton,
+    Divider,
+    FontWeight,
+    MainAxisAlignment,
 )
 
 
@@ -16,15 +21,20 @@ def get_view(page: Page) -> Container:
     return Container(
         content=Column(
             [
-                Text(
-                    "Welcome to the Contact Page",
-                    size=30,
-                    color="orange",
-                    weight="bold",
+                Text("Contact Me", size=28, weight=FontWeight.BOLD),
+                Text("I'd love to hear from you!"),
+                TextField(label="Your Name", width=300),
+                TextField(label="Your Email", width=300),
+                TextField(
+                    label="Message", multiline=True, min_lines=3, max_lines=5, width=300
                 ),
+                ElevatedButton("Send Message", icon=Icons.SEND),
+                Divider(),
+                Text("Or reach out via social links in the footer!", italic=True),
             ],
-            alignment=alignment.center,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         ),
-        alignment=alignment.center,
+        alignment=alignment.top_center,
         expand=True,
+        padding=30,
     )

@@ -1,43 +1,42 @@
 import flet as ft
-from flet import View, Tabs, Tab, Icons
-from pages import (
-    home_page,
-    page_not_found_error,
-    about_page,
-    contact_page,
-    projects_page,
-    resume_page,
-)
+from flet import Page
+from components.footer import create_footer
+from utils.routing import get_routes, update_route, route_change
+from utils.tabs import get_tabs
 
 
-def main(page: ft.Page):
+def main(page: Page):
     page.title = "Zach's Personal Website"
+    page.theme_mode = ft.ThemeMode.DARK
+    page.controls.clear()
 
-    tabs = Tabs(
-        selected_index=0,
-        animation_duration=300,
-        tabs=[
-            Tab(text="Home", icon=Icons.HOME, content=home_page.get_view(page)),
-            Tab(text="About", icon=Icons.PERSON, content=about_page.get_view(page)),
-            Tab(text="Projects", icon=Icons.WORK, content=projects_page.get_view(page)),
-            Tab(
-                text="Resume",
-                icon=Icons.DESCRIPTION,
-                content=resume_page.get_view(page),
-            ),
-            Tab(text="Contact", icon=Icons.EMAIL, content=contact_page.get_view(page)),
-            Tab(
-                text="Error",
-                icon=Icons.ERROR,
-                content=page_not_found_error.get_view(page),
-            ),
-        ],
-        expand=True,
-        tab_alignment="center",
-        padding=ft.padding.symmetric(horizontal=40),
+    routes = get_routes()
+
+    # Create tabs using utility function
+    tabs = get_tabs(page, lambda e: update_route(e, page, routes))
+
+    footer = create_footer(page)
+    # Add footer to the page
+    page.add(
+        ft.Column(
+            [
+                tabs,
+                footer,
+            ],
+            spacing=0,
+            expand=True,
+        )
     )
 
-    page.add(tabs)
+    # Register the route change handler
+    page.on_route_change = lambda e: route_change(e, page, tabs, routes)
+
+    # Initialize with the current route or default to home
+    if page.route == "":
+        page.route = "/home"
+    # Handle initial route
+    route_change(None, page, tabs, routes)
 
 
-ft.app(main)
+# run app
+ft.app(main, assets_dir="assets")
