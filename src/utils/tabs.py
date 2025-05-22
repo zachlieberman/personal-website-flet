@@ -1,6 +1,8 @@
 import flet as ft
 from flet import Tabs, Tab, Icons, Page
-from pages import home_page, about_page, projects_page, resume_page, contact_page
+from src.pages import home_page, about_page, projects_page, resume_page, contact_page
+from src.components.footer import create_footer
+from src.utils.routing import get_routes, update_route, route_change
 
 
 def get_tabs(page: Page, on_change):
