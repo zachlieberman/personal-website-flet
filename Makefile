@@ -2,12 +2,16 @@ PYTHON = .venv/bin/python
 PIP = .venv/bin/pip
 PYTEST = .venv/bin/pytest
 COVERAGE = .venv/bin/coverage
+RUFF = .venv/bin/ruff
 
-.PHONY: all test coverage run-server run-server-web install clean
+.PHONY: all test lint coverage run-server run-server-web install clean
 
 all: test
 
-test:
+lint:
+	$(RUFF) check src/ tests/
+
+test: lint
 	$(PYTEST) --cov=src --cov=components --cov=pages --cov=utils --cov-report=term --cov-fail-under=80 --cov-config=.coveragerc
 
 coverage:

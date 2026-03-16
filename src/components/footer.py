@@ -16,7 +16,7 @@ def create_footer(page):
     return ft.Container(
         content=ft.Row(
             [
-                ft.Text("2025 Zach Lieberman"),
+                ft.Text("2026 Zach Lieberman"),
                 ft.Row(
                     [
                         ft.IconButton(

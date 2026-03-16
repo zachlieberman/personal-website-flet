@@ -2,25 +2,22 @@ import flet as ft
 from flet import (
     Page,
     Container,
-    Row,
     Text,
-    FloatingActionButton,
-    Icons,
-    SafeArea,
     alignment,
     Column,
     Card,
     ListTile,
-    MainAxisAlignment,
     FontWeight,
 )
+from utils.responsive import get_dims
 
 
 def get_view(page: Page) -> Container:
+    d = get_dims(page)
     return Container(
         content=Column(
             [
-                Text("Projects", size=32, weight=FontWeight.BOLD),
+                Text("Projects", size=d["title_size"], weight=FontWeight.BOLD),
                 Text("A selection of my favorite creative coding projects:"),
                 Card(
                     content=ListTile(
@@ -66,5 +63,5 @@ def get_view(page: Page) -> Container:
         ),
         alignment=alignment.top_center,
         expand=True,
-        padding=30,
+        padding=d["padding"],
     )

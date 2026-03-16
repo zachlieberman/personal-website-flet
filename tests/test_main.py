@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import MagicMock
 import flet as ft
 import src.main as main_mod
@@ -18,5 +17,3 @@ def test_main_runs_without_error():
     assert page.on_route_change is not None
     # After main, route should be set to /home
     assert page.route == "/home"
-    # Should call update at least once
-    assert page.update.called

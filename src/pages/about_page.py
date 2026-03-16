@@ -4,24 +4,22 @@ from flet import (
     Container,
     Row,
     Text,
-    FloatingActionButton,
-    Icons,
-    SafeArea,
     alignment,
     Column,
     Image,
     Chip,
-    MainAxisAlignment,
     FontWeight,
 )
+from utils.responsive import get_dims
 
 
 def get_view(page: Page) -> Container:
+    d = get_dims(page)
     return Container(
         content=Column(
             [
-                Image(src="/assets/icon.png", width=80, height=80),
-                Text("About Me", size=28, weight=FontWeight.BOLD),
+                Image(src="/assets/icon.png", width=d["image_sm"], height=d["image_sm"]),
+                Text("About Me", size=d["heading_size"], weight=FontWeight.BOLD),
                 Text(
                     "I'm a creative technologist passionate about art, code, and education."
                 ),
@@ -30,7 +28,7 @@ def get_view(page: Page) -> Container:
                     size=16,
                     italic=True,
                 ),
-                Text("Skills:", size=18, weight=FontWeight.W_600),
+                Text("Skills:", size=d["subtext_size"], weight=FontWeight.W_600),
                 Row(
                     [
                         Chip(label=ft.Text("Python")),
@@ -46,5 +44,5 @@ def get_view(page: Page) -> Container:
         ),
         alignment=alignment.top_center,
         expand=True,
-        padding=30,
+        padding=d["padding"],
     )
