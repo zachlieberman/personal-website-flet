@@ -1,11 +1,10 @@
 from unittest.mock import MagicMock
-import flet as ft
 import src.main as main_mod
 
 
 def test_main_runs_without_error():
     # Create a MagicMock page to simulate Flet Page
-    page = MagicMock(spec=ft.Page)
+    page = MagicMock()
     page.route = ""
     page.update = MagicMock()
     page.add = MagicMock()

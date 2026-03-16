@@ -1,10 +1,10 @@
 PYTHON = .venv/bin/python
 PIP = .venv/bin/pip
 PYTEST = .venv/bin/pytest
-COVERAGE = .venv/bin/coverage
 RUFF = .venv/bin/ruff
+FLET = .venv/bin/flet
 
-.PHONY: all test lint coverage run-server run-server-web install clean
+.PHONY: all test lint build-web hooks run-server run-server-web install clean
 
 all: test
 
@@ -12,12 +12,16 @@ lint:
 	$(RUFF) check src/ tests/
 
 test: lint
-	$(PYTEST) --cov=src --cov=components --cov=pages --cov=utils --cov-report=term --cov-fail-under=80 --cov-config=.coveragerc
+	$(PYTEST) --cov=src --cov=components --cov=pages --cov=utils \
+		--cov-report=term-missing --cov-report=html \
+		--cov-fail-under=80 --cov-config=.coveragerc
 
-coverage:
-	$(COVERAGE) run --source=src,components,pages,utils -m pytest tests/ --cov-config=.coveragerc
-	$(COVERAGE) report --fail-under=80
-	$(COVERAGE) html
+hooks:
+	$(PIP) install pre-commit
+	.venv/bin/pre-commit install
+
+build-web:
+	$(FLET) build web src/ --module-name main
 
 run-server:
 	$(PYTHON) -m flet run src/main.py
@@ -27,7 +31,7 @@ run-server-web:
 
 install:
 	$(PIP) install -r requirements.txt
-	$(PIP) install coverage
+	$(PIP) install pytest pytest-cov
 
 clean:
-	rm -rf .pytest_cache .coverage htmlcov
+	rm -rf .pytest_cache .coverage htmlcov build
