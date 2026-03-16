@@ -2,3 +2,4 @@ flet
 requests
 python-dotenv
 poetry
+ruff

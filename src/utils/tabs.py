@@ -1,8 +1,7 @@
 import flet as ft
 from flet import Tabs, Tab, Icons, Page
-from src.pages import home_page, about_page, projects_page, resume_page, contact_page
-from src.components.footer import create_footer
-from src.utils.routing import get_routes, update_route, route_change
+from pages import home_page, about_page, projects_page, resume_page, contact_page
+from utils.responsive import get_dims
 
 
 def get_tabs(page: Page, on_change):
@@ -10,6 +9,7 @@ def get_tabs(page: Page, on_change):
     Returns a Tabs instance for the main navigation, with content for each tab.
     The on_change callback is called when the tab selection changes.
     """
+    d = get_dims(page)
     return Tabs(
         selected_index=0,
         animation_duration=300,
@@ -27,5 +27,5 @@ def get_tabs(page: Page, on_change):
         ],
         expand=True,
         tab_alignment="center",
-        padding=ft.padding.symmetric(horizontal=40),
+        padding=ft.padding.symmetric(horizontal=d["tab_h_padding"]),
     )

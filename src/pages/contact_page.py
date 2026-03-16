@@ -2,31 +2,29 @@ import flet as ft
 from flet import (
     Page,
     Container,
-    Row,
     Text,
-    FloatingActionButton,
     Icons,
-    SafeArea,
     alignment,
     Column,
     TextField,
     ElevatedButton,
     Divider,
     FontWeight,
-    MainAxisAlignment,
 )
+from utils.responsive import get_dims
 
 
 def get_view(page: Page) -> Container:
+    d = get_dims(page)
     return Container(
         content=Column(
             [
-                Text("Contact Me", size=28, weight=FontWeight.BOLD),
+                Text("Contact Me", size=d["heading_size"], weight=FontWeight.BOLD),
                 Text("I'd love to hear from you!"),
-                TextField(label="Your Name", width=300),
-                TextField(label="Your Email", width=300),
+                TextField(label="Your Name", width=d["field_width"]),
+                TextField(label="Your Email", width=d["field_width"]),
                 TextField(
-                    label="Message", multiline=True, min_lines=3, max_lines=5, width=300
+                    label="Message", multiline=True, min_lines=3, max_lines=5, width=d["field_width"]
                 ),
                 ElevatedButton("Send Message", icon=Icons.SEND),
                 Divider(),
@@ -36,5 +34,5 @@ def get_view(page: Page) -> Container:
         ),
         alignment=alignment.top_center,
         expand=True,
-        padding=30,
+        padding=d["padding"],
     )
