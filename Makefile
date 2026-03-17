@@ -12,7 +12,7 @@ lint:
 	$(RUFF) check src/ tests/
 
 test: lint
-	$(PYTEST) --cov=src --cov=components --cov=pages --cov=utils \
+	$(PYTEST) --cov=src \
 		--cov-report=term-missing --cov-report=html \
 		--cov-fail-under=80 --cov-config=.coveragerc
 

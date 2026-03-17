@@ -35,7 +35,7 @@ jobs:
           pip install pytest pytest-cov
       - name: Run tests with coverage
         run: |
-          pytest --cov=src --cov=components --cov=pages --cov=utils \
+          pytest --cov=src \
             --cov-report=term --cov-report=xml \
             --cov-fail-under=80 --cov-config=.coveragerc
       - name: Upload coverage report

@@ -1,81 +1,64 @@
-# PersonalWebsiteFlet app
+# Personal Website (Flet)
 
-## Run the app
+A multi-page personal portfolio site built with [Flet](https://flet.dev/) (Python UI framework). Runs as a desktop app or in the browser.
 
-### uv
+## Setup
 
-Run as a desktop app:
-
-```
-uv run flet run
-```
-
-Run as a web app:
-
-```
-uv run flet run --web
+```bash
+python -m venv .venv
+make install
 ```
 
-### Poetry
+`make install` installs all dependencies from `requirements.txt` plus `pytest` and `pytest-cov`.
 
-Install dependencies from `pyproject.toml`:
+## Running the App
 
-```
-poetry install
-```
+```bash
+# Desktop
+make run-server
 
-Run as a desktop app:
-
-```
-poetry run flet run
+# Web (browser)
+make run-server-web
 ```
 
-Run as a web app:
+## Development
 
-```
-poetry run flet run --web
-```
+```bash
+# Lint (ruff)
+make lint
 
-For more details on running the app, refer to the [Getting Started Guide](https://flet.dev/docs/getting-started/).
+# Run all tests (lint runs first, 80% coverage required)
+make test
 
-## Build the app
-
-### Android
-
-```
-flet build apk -v
+# Install pre-commit hooks
+make hooks
 ```
 
-For more details on building and signing `.apk` or `.aab`, refer to the [Android Packaging Guide](https://flet.dev/docs/publish/android/).
+Run a single test file or test:
 
-### iOS
-
-```
-flet build ipa -v
-```
-
-For more details on building and signing `.ipa`, refer to the [iOS Packaging Guide](https://flet.dev/docs/publish/ios/).
-
-### macOS
-
-```
-flet build macos -v
+```bash
+.venv/bin/pytest tests/test_home_page.py
+.venv/bin/pytest tests/test_app.py::test_home_page_renders
 ```
 
-For more details on building macOS package, refer to the [macOS Packaging Guide](https://flet.dev/docs/publish/macos/).
-
-### Linux
+## Project Structure
 
 ```
-flet build linux -v
+src/
+  main.py          # Entry point — builds tabs, footer, wires routing
+  pages/           # One file per page, each exports get_view(page)
+  components/      # Reusable UI components (e.g. footer)
+  utils/
+    routing.py     # Route ↔ tab index mapping
+    responsive.py  # get_dims(page) — returns scaled dimensions by window width
+  assets/          # Static assets
+tests/             # pytest test suite (mirrors src/ structure)
 ```
 
-For more details on building Linux package, refer to the [Linux Packaging Guide](https://flet.dev/docs/publish/linux/).
+## Architecture Notes
 
-### Windows
-
-```
-flet build windows -v
-```
-
-For more details on building Windows package, refer to the [Windows Packaging Guide](https://flet.dev/docs/publish/windows/).
+- **Entry point:** `src/main.py` calls `build()`, which instantiates tabs and footer. `build()` is also called on `page.on_resized` so the UI redraws responsively.
+- **Imports:** All `src/` files use bare imports (`from components.footer import ...`). `flet run` adds `src/` to `sys.path`; `conftest.py` does the same for pytest.
+- **Routing:** `update_route` (tab → route) and `route_change` (route → tab) guard against each other to prevent infinite loops.
+- **Responsive sizing:** `get_dims(page)` reads `page.window.width` and returns scaled dimension values. Falls back to 800px for non-numeric widths (e.g. in tests).
+- **Pages:** Each page is instantiated fresh on every `build()` call, so dimensions are always current.
