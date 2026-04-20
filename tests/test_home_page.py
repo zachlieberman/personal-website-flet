@@ -31,4 +31,4 @@ def test_home_page_renders(page):
     view = home_page.get_view(page)
     assert hasattr(view, "content")
     texts = get_texts_from_column(view.content)
-    assert any("Welcome to my personal website!" in t for t in texts)
+    assert any("Zachary Lieberman" in t for t in texts)
