@@ -20,17 +20,46 @@ def get_view(page: Page) -> Container:
         content=Column(
             [
                 Text("Contact Me", size=d["heading_size"], weight=FontWeight.BOLD),
-                Text("I'd love to hear from you!"),
+                Text(
+                    "Interested in working together or just want to connect?",
+                    color=ft.Colors.GREY_400,
+                ),
                 TextField(label="Your Name", width=d["field_width"]),
                 TextField(label="Your Email", width=d["field_width"]),
                 TextField(
-                    label="Message", multiline=True, min_lines=3, max_lines=5, width=d["field_width"]
+                    label="Message",
+                    multiline=True,
+                    min_lines=3,
+                    max_lines=5,
+                    width=d["field_width"],
                 ),
                 ElevatedButton("Send Message", icon=Icons.SEND),
                 Divider(),
-                Text("Or reach out via social links in the footer!", italic=True),
+                Text(
+                    "Or reach out directly via the links below:",
+                    size=13,
+                    italic=True,
+                    color=ft.Colors.GREY_400,
+                ),
+                ft.Row(
+                    [
+                        ft.TextButton(
+                            "zacharylieberman1@gmail.com",
+                            icon=Icons.EMAIL,
+                            url="mailto:zacharylieberman1@gmail.com",
+                        ),
+                        ft.TextButton(
+                            "LinkedIn",
+                            icon=Icons.OPEN_IN_NEW,
+                            url="https://www.linkedin.com/in/zachary-lieberman6",
+                        ),
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    spacing=16,
+                ),
             ],
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            spacing=16,
         ),
         alignment=alignment.top_center,
         expand=True,

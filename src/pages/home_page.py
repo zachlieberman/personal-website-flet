@@ -6,6 +6,7 @@ from flet import (
     Icons,
     alignment,
     Column,
+    Row,
     Image,
     ElevatedButton,
     FontWeight,
@@ -21,18 +22,37 @@ def get_view(page: Page) -> Container:
             [
                 Image(src="/assets/icon.png", width=d["image_lg"], height=d["image_lg"]),
                 Text(
-                    "Welcome to my personal website!", size=d["title_size"], weight=FontWeight.BOLD
+                    "Hi, I'm Zachary Lieberman",
+                    size=d["title_size"],
+                    weight=FontWeight.BOLD,
                 ),
-                Text("I'm Zach Lieberman, a creative coder and educator."),
                 Text(
-                    "Check out my latest interactive project below!",
+                    "Senior Software Engineer · AWS & Cloud Infrastructure",
                     size=d["subtext_size"],
-                    italic=True,
+                    color=ft.Colors.BLUE_200,
                 ),
-                ElevatedButton(
-                    "Try the Demo",
-                    icon=Icons.PLAY_ARROW,
-                    url="https://openprocessing.org/user/12345",
+                Text(
+                    "Building enterprise-scale cloud compliance platforms at Capital One.\n"
+                    "AWS Certified Solutions Architect · Based in Los Angeles, CA",
+                    text_align=ft.TextAlign.CENTER,
+                    size=15,
+                    color=ft.Colors.GREY_400,
+                ),
+                Row(
+                    [
+                        ElevatedButton(
+                            "Download Resume",
+                            icon=Icons.DOWNLOAD,
+                            url="Zachary%20Lieberman%20Resume.pdf",
+                        ),
+                        ElevatedButton(
+                            "GitHub",
+                            icon=Icons.CODE,
+                            url="https://github.com/zachlieberman",
+                        ),
+                    ],
+                    alignment=MainAxisAlignment.CENTER,
+                    spacing=16,
                 ),
             ],
             alignment=MainAxisAlignment.CENTER,

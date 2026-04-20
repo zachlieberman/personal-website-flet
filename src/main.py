@@ -6,7 +6,7 @@ from utils.tabs import get_tabs
 
 
 def main(page: Page):
-    page.title = "Zach's Personal Website"
+    page.title = "Zachary Lieberman | Software Engineer"
     page.theme_mode = ft.ThemeMode.DARK
 
     routes = get_routes()
